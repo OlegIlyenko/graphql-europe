@@ -21,7 +21,7 @@ import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 
-class Admin @Inject() (config: Configuration, userRepo: UserRepo, subsRepo: SubscriberRepo, clientProvider: GraphCoolClientProvider, mailchimpRepo: MailchimpRepo) extends Controller {
+class Admin @Inject() (config: Configuration, userRepo: UserRepo, subsRepo: SubscriberRepo, clientProvider: GraphCoolClientProvider, mailchimpRepo: MailchimpRepo, contentRepo: ContentRepo) extends InjectedController {
   val log = Logger(this.getClass)
 
   case class Login(email: String, password: String, origPath: String)
@@ -30,15 +30,17 @@ class Admin @Inject() (config: Configuration, userRepo: UserRepo, subsRepo: Subs
 
   val conf = config.underlying.as[Config]("graphqlEurope")
 
+  val conference = contentRepo.currentConference
+
   def index = Action(Redirect(routes.Admin.notifications()))
 
   def login(origPath: Option[String]) = Action(
-    Ok(views.html.admin.login(conf, origPath getOrElse routes.Admin.notifications().path(), Nil)))
+    Ok(views.html.admin.login(conf, conference, origPath getOrElse routes.Admin.notifications().path(), Nil)))
 
   def doLogin = Action.async { implicit req ⇒
     loginForm.bindFromRequest.fold(
       _ ⇒ {
-        Future.successful(Ok(views.html.admin.login(conf, routes.Admin.notifications().path(), List("Wrong fields!"))))
+        Future.successful(Ok(views.html.admin.login(conf, conference, routes.Admin.notifications().path(), List("Wrong fields!"))))
       },
 
       login ⇒ {
@@ -46,7 +48,7 @@ class Admin @Inject() (config: Configuration, userRepo: UserRepo, subsRepo: Subs
           case Some(token) ⇒
             Redirect(login.origPath).withSession("token" → token)
           case None ⇒
-            Ok(views.html.admin.login(conf, routes.Admin.notifications().path(), List("E-Mail or password is invalid!")))
+            Ok(views.html.admin.login(conf, conference, routes.Admin.notifications().path(), List("E-Mail or password is invalid!")))
         }
 
       }
@@ -74,7 +76,7 @@ class Admin @Inject() (config: Configuration, userRepo: UserRepo, subsRepo: Subs
                 count
             }
           }
-      }.map(count ⇒ Ok(views.html.admin.info(conf, "Done", "exported " + count)))
+      }.map(count ⇒ Ok(views.html.admin.info(conf, conference, "Done", "exported " + count)))
     }
   }
 
@@ -90,7 +92,7 @@ class Admin @Inject() (config: Configuration, userRepo: UserRepo, subsRepo: Subs
       notNotified ← notNotifiedF
       notExported ← notExportedF
       unsubscribed ← unsubscribedF
-    } yield Ok(views.html.admin.notifications(conf, count, notExported, notNotified, unsubscribed, date))
+    } yield Ok(views.html.admin.notifications(conf, conference, count, notExported, notNotified, unsubscribed, date))
   }
 
   def exportSubs(suffix: String) = Action.async { implicit req ⇒

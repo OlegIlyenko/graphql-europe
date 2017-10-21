@@ -1,10 +1,11 @@
 @import views._
+@import views.ed2017._
 
-@(talk: Talk)
+@(talk: Talk, conference: Conference)
 
 <h3 style="padding-bottom: 10px">
   <p class="schedule-narrow-time"><strong class="schedule-time">@FormatUtil.format(talk.startTime)</strong></p>
-  <a href="/schedule/@talk.slug" style="padding-right: 10px"><strong>@talk.title</strong></a>
+  <a href="/@conference.normalUrl("schedule/" + talk.slug)" style="padding-right: 10px"><strong>@talk.title</strong></a>
 </h3>
 
 <section class="talk-description">
@@ -12,7 +13,7 @@
 </section>
 
 @if(talk.shortDescription.isDefined) {
-  <p><a href="/schedule/@talk.slug">more info</a></p>
+  <p><a href="/@conference.normalUrl("schedule/" + talk.slug)">more info</a></p>
 }
 
 @talk.slidesUrl.map { slides =>
@@ -23,6 +24,6 @@
   <div style="width: 0; height: 0; padding-top: 15px"></div>
 
   @talk.speakers.sortBy(_.slug).map { speaker =>
-    @scheduleSpeaker(speaker)
+    @scheduleSpeaker(speaker, conference)
   }
 }

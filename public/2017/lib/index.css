@@ -477,7 +477,7 @@ h2 {
 
 .footer-bg {
   z-index: -20;
-  background: url(/assets/image/bg.jpg) no-repeat center center;
+  background: url(/assets/2017/image/bg.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1001,7 +1001,7 @@ h2 {
 /* footer from dark theme */
 
 .footer-bg {
-  background: url(/assets/image/bg-dark-alt1.jpg) no-repeat center center;
+  background: url(/assets/2017/image/bg-dark-alt1.jpg) no-repeat center center;
   background-color: #1f2228;
 }
 .subtitle-footer, .description-footer, .footer-copy {

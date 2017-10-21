@@ -1,7 +1,9 @@
-package views
+package views.ed2017
 
-import java.time.{Duration, LocalTime}
 import java.time.format.DateTimeFormatter
+import java.time.{Duration, LocalTime}
+
+import views.TalkFormat
 
 object FormatUtil {
   val timeFormat = DateTimeFormatter.ofPattern("HH:mm")

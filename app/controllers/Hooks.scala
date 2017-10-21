@@ -5,8 +5,8 @@ import javax.inject.Inject
 import model.Subscriber
 import play.api.libs.json.{JsString, Json}
 import play.api.{Configuration, Logger}
-import play.api.mvc.{Action, Controller, Result}
-import repo.{GraphCoolClientProvider, MailClient, MailchimpRepo, SubscriberRepo}
+import play.api.mvc.{Action, Controller, InjectedController, Result}
+import repo._
 import views.Config
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
@@ -15,7 +15,7 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Try
 
-class Hooks @Inject() (config: Configuration, subscribers: SubscriberRepo, mailClient: MailClient, clientProvider: GraphCoolClientProvider, mailchimpRepo: MailchimpRepo) extends Controller {
+class Hooks @Inject() (config: Configuration, subscribers: SubscriberRepo, mailClient: MailClient, clientProvider: GraphCoolClientProvider, mailchimpRepo: MailchimpRepo, content: ContentRepo) extends InjectedController {
   val conf = config.underlying.as[Config]("graphqlEurope")
   val log = Logger(this.getClass)
 
@@ -23,7 +23,7 @@ class Hooks @Inject() (config: Configuration, subscribers: SubscriberRepo, mailC
 
   def subscribed(id: String) =
     Action.async(subscribers.byId(id).map {
-      case Some(s) ⇒ Ok(views.html.subscribed(conf, s))
+      case Some(s) ⇒ Ok(views.html.subscribed(conf, content.currentConference, s))
       case None ⇒ NotFound(s"Subscriber with ID '$id' not found.")
     })
 
@@ -52,7 +52,7 @@ class Hooks @Inject() (config: Configuration, subscribers: SubscriberRepo, mailC
             log.error(s"Failed to unsubscribe ID '$id'!")
             Future.successful(())
         }
-        .map(_ ⇒ Ok(views.html.unsubscribed(conf)))
+        .map(_ ⇒ Ok(views.html.unsubscribed(conf, content.currentConference)))
     }
 
   def subscriberCreated = Action.async { req ⇒
@@ -222,7 +222,7 @@ class Hooks @Inject() (config: Configuration, subscribers: SubscriberRepo, mailC
               |
               |You can unsubscribe with following URL: ${conf.canonicalUrl}/unsubscribe/${sub.id}
             """.stripMargin,
-          html = views.html.subscribed(conf, sub).toString)
+          html = views.html.subscribed(conf, content.currentConference, sub).toString)
       })
     }
   }

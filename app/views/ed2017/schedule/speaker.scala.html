@@ -1,0 +1,18 @@
+@import views._
+@import views.ed2017._
+
+@(config: Config, speaker: Speaker, conference: Conference)
+
+@views.html.ed2017.secondary(config, conference, speaker.name, metaInfo = Some(speaker.metaInfo)) {
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>@speaker.name</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    @speakerSection(speaker, conference, showName = false)
+  </div>
+}

@@ -1,14 +1,14 @@
-@import views.Config
 @import model.Subscriber
+@import views._
 
-@(config: Config, subscriber: Subscriber)
+@(config: Config, conference: Conference, subscriber: Subscriber)
 
 @fontFam = @{"font-family: proxima-nova, \"Helvetica Neue\", Verdana, sans-serif; "}
 @bottomColor = @{"color: #757576; font-size: 19px;"}
 
 <html>
   <head>
-    @meta(config, None)
+    @meta(config, conference, None)
 
     <title>Thanks for subscribing, @subscriber.name!</title>
 
@@ -29,7 +29,7 @@
       <div id="main-content" style="padding-top: 100px; text-align: center; color: #1f2228;">
         <div id="main-box" style="background-color: white; border: 2px solid #E2E8F0; display: inline-block; max-width: 650px; padding-top: 50px; padding-bottom: 50px; padding-left: 50px; padding-right: 50px;">
           <a href="@config.canonicalUrl">
-            <img id="logo" style="width: 150px; height: auto; padding-bottom: 10px;" src="@config.canonicalUrl/assets/image/graphql-europe-logo.png" alt="GraphQL-Europe Logo">
+            <img id="logo" style="width: 150px; height: auto; padding-bottom: 10px;" src="@config.canonicalUrl/assets/@conference.assetUrl("image/graphql-europe-logo.png")" alt="GraphQL-Europe Logo">
           </a>
           
           <h1 style="@fontFam font-size: 30px; font-weight: normal;">Thanks for subscribing, <strong>@subscriber.name</strong>!</h1>
@@ -39,16 +39,16 @@
 
         <div id="share" style="padding-top: 50px; padding-bottom: 30px;">
           <a id="first-share" style="padding-right: 20px;" href="https://twitter.com/@@graphqleu" target="_blank">
-            <img style="width: 50px;" width="50" src="@config.canonicalUrl/assets/image/email-twitter.png">
+            <img style="width: 50px;" width="50" src="@config.canonicalUrl/assets/@conference.assetUrl("image/email-twitter.png")">
           </a>
 
-          <a href="mailto:@config.supportEmail">
-            <img style="width: 50px;" width="50" src="@config.canonicalUrl/assets/image/email.png">
+          <a href="mailto:@conference.supportEmail">
+            <img style="width: 50px;" width="50" src="@config.canonicalUrl/assets/@conference.assetUrl("image/email.png")">
           </a>
         </div>
 
         <div id="links">
-          <a id="first-link" href="mailto:@config.supportEmail" style="@fontFam @bottomColor text-decoration: none;">
+          <a id="first-link" href="mailto:@conference.supportEmail" style="@fontFam @bottomColor text-decoration: none;">
             Contact
           </a>
           <span class="link-separator" style="@fontFam @bottomColor padding-left: 15px; padding-right: 15px;">|</span>

@@ -1,6 +1,6 @@
 @import views._
 
-@(config: Config, defaultQuery: String)
+@(config: Config, conference: Conference, defaultQuery: String)
 
 <!DOCTYPE html>
 <html>
@@ -18,7 +18,7 @@
     }
     </style>
 
-    @meta(config, Some(MetaInfo("GraphQL-Europe Conference - GraphQL API")))
+    @meta(config, conference, Some(MetaInfo("GraphQL-Europe Conference - GraphQL API")))
 
     <title>GraphQL-Europe API</title>
 

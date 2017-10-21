@@ -1,11 +1,10 @@
 @import views._
-@import repo.ContentRepo
 
-@(config: Config, speakers: List[Speaker], sponsors: List[Sponsor], tickets: List[Ticket], venue: Venue, repo: ContentRepo, dark: Boolean, topLogo: Boolean)
+@(config: Config, conference: Conference, dark: Boolean, topLogo: Boolean)
 
 @prefix = @{if (dark) "-dark" else ""}
 
-@main(config, config.shortDescription) {
+@main(config, conference, conference.shortDescription) {
   @if(dark) {
     <div class="form-bg"></div>
   }
@@ -18,33 +17,33 @@
         <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation"></button>
         <div class="collapse navbar-toggleable-xs" id="navbar-header">
           @if(topLogo) {
-            <img class="top-logo" src="@routes.Assets.versioned("image/top-logo.svg")" />
+            <img class="top-logo" src="@routes.Assets.versioned(conference.assetUrl("image/top-logo.svg"))" />
           }
 
           <ul class="nav navbar-nav nav-pills float-xs-right">
             <li class="nav-item fade-in f1"><a class="nav-link" href="#tickets">Tickets</a></li>
-            <li class="nav-item fade-in f2"><a class="nav-link" href="/schedule">Schedule</a></li>
-            <li class="nav-item fade-in f3"><a class="nav-link" href="/speakers">Speakers</a></li>
-            <li class="nav-item fade-in f4"><a class="nav-link" href="/sponsors">Sponsors</a></li>
-            <li class="nav-item fade-in f5"><a class="nav-link" href="/team">Team</a></li>
+            <li class="nav-item fade-in f2"><a class="nav-link" href="@conference.scheduleUrl">Schedule</a></li>
+            <li class="nav-item fade-in f3"><a class="nav-link" href="@conference.speakersUrl">Speakers</a></li>
+            <li class="nav-item fade-in f4"><a class="nav-link" href="@conference.sponsorsUrl">Sponsors</a></li>
+            <li class="nav-item fade-in f5"><a class="nav-link" href="@conference.teamUrl">Team</a></li>
           </ul>
         </div>
       </nav>
     </div>
   </div>
 
-  <img class="cloud cloud-tl" src="@routes.Assets.versioned(s"image/cloud-tl$prefix.svg")" />
-  <img class="cloud cloud-tr" src="@routes.Assets.versioned(s"image/cloud-tr$prefix.svg")" />
-  <img class="cloud cloud-br" src="@routes.Assets.versioned(s"image/cloud-br$prefix.svg")" />
-  <img class="cloud cloud-bl" src="@routes.Assets.versioned(s"image/cloud-bl$prefix.svg")" />
+  <img class="cloud cloud-tl" src="@routes.Assets.versioned(conference.assetUrl(s"image/cloud-tl$prefix.svg"))" />
+  <img class="cloud cloud-tr" src="@routes.Assets.versioned(conference.assetUrl(s"image/cloud-tr$prefix.svg"))" />
+  <img class="cloud cloud-br" src="@routes.Assets.versioned(conference.assetUrl(s"image/cloud-br$prefix.svg"))" />
+  <img class="cloud cloud-bl" src="@routes.Assets.versioned(conference.assetUrl(s"image/cloud-bl$prefix.svg"))" />
 
   <div class="main-header">
     <div class="main-header-content">
-      <img class="logo" src="@routes.Assets.versioned("image/logo.svg")" />
+      <img class="logo" src="@routes.Assets.versioned(conference.assetUrl("image/logo.svg"))" />
       <div class="main-header-text">
-        <div class="fade-in f0 subtitle">@config.name</div>
-        <div class="fade-in f1 description">@config.description</div>
-        <div class="fade-in f2 location">@config.location</div>
+        <div class="fade-in f0 subtitle">@conference.name</div>
+        <div class="fade-in f1 description">@conference.description</div>
+        <div class="fade-in f2 location">@conference.location</div>
         <div  class="fade-in f3 location" style="margin-top: 30px">
           <a style="font-size: 3vh;" class="btn btn-lg btn-success register-button" href="#tickets" role="button">Get your ticket</a>
         </div>
@@ -123,14 +122,14 @@
         <h2>Speakers</h2>
       </div>
       <div class="col-md-6" style="text-align: right">
-        <a class="btn btn-lg btn-success register-button" href="/schedule" role="button">View Schedule</a>
+        <a class="btn btn-lg btn-success register-button" href="/@conference.normalUrl("schedule")" role="button">View Schedule</a>
       </div>
     </div>
 
-    @speakers.grouped(3).map { group =>
+    @conference.speakers.grouped(3).map { group =>
       <div class="row">
         @group.map { s =>
-          @speaker(s, repo)
+          @speaker(s, conference)
         }
       </div>
     }
@@ -157,8 +156,8 @@
       <div class="col-md-2" style="text-align: center"></div>
     </div>
 
-    <img class="cloud-m cloud-m-br" src="@routes.Assets.versioned(s"image/cloud-m-br$prefix.svg")" />
-    <img class="cloud-m cloud-m-bl" src="@routes.Assets.versioned(s"image/cloud-m-bl$prefix.svg")" />
+    <img class="cloud-m cloud-m-br" src="@routes.Assets.versioned(conference.assetUrl(s"image/cloud-m-br$prefix.svg"))" />
+    <img class="cloud-m cloud-m-bl" src="@routes.Assets.versioned(conference.assetUrl(s"image/cloud-m-bl$prefix.svg"))" />
 
     <div class="beautiful-line-top"></div>
     <div class="beautiful-line-bottom" id="tickets"></div>
@@ -171,11 +170,11 @@
     </div>
 
     <div class="row" style="padding-top: 30px">
-      @tickets.map { ticket =>
+      @conference.tickets.map { ticket =>
         <div class="col-xl-4">
           <div class="ticket-box @{if (!ticket.available) "ticket-box-not-available" else ""}">
             @if(ticket.soldOut) {
-              <img class="sold-out" src="@routes.Assets.versioned("image/sold-out-grey.svg")">
+              <img class="sold-out" src="@routes.Assets.versioned(conference.assetUrl("image/sold-out-grey.svg"))">
             }
             <div class="ticket price">@ticket.price</div>
             <div class="ticket price-title">@ticket.name</div>
@@ -191,8 +190,8 @@
     <div class="row" style="padding-top: 20px">
         <div class="col-md-12 ticket-note">
           <p>Tickets grant access to the conference, including food and drinks.</p>
-          <p>The <a class="nav-link" href="/code-of-conduct">Code of Conduct</a> applies. Sales are awarded on a first-come-first-serve basis.</p>
-          <p>If you want to learn more about group tickets, please, contact <a href="mailto:@config.supportEmail">@config.supportEmail</a>.</p>
+          <p>The <a class="nav-link" href="/@conference.normalUrl("code-of-conduct")">Code of Conduct</a> applies. Sales are awarded on a first-come-first-serve basis.</p>
+          <p>If you want to learn more about group tickets, please, contact <a href="mailto:@conference.supportEmail">@conference.supportEmail</a>.</p>
         </div>
     </div>
 
@@ -217,43 +216,46 @@
         <a class="btn btn-lg btn-success disabled register-button" style="margin-top: 30px; background-color: #b5b5b5;" href="https://diversitytickets.org/events/65" target="_blank" role="button">Now Closed</a>
       </div>
       <div class="col-md-2" style="text-align: center"></div>
-    </div>   
-
-    <div class="beautiful-line-top"></div>
-    <div class="beautiful-line-bottom" id="location"></div>
-
-    <div class="row" style="padding-bottom: 30px">
-      <div class="col-md-6 location-address">
-        <h2 style="padding-bottom: 0; margin-bottom: 0">Location</h2>
-        <p class="location-address-name">@venue.name</p>
-        <p>@venue.address.streetName @venue.address.houseNumber, @venue.address.zipCode @venue.address.city</p>
-      </div>
-      <div class="col-md-6" style="text-align: right">
-        <a class="btn btn-lg btn-success register-button" href="/location" role="button">Get directions</a>
-      </div>
     </div>
 
-    <div class="row" style="padding-bottom: 30px">
-      <div class="col-md-3 venue-side">
-        <img class="venue-image venue-side-first" src="@routes.Assets.versioned("image/venue/p6.jpg")">
-        <img class="venue-image" src="@routes.Assets.versioned("image/venue/p3.jpg")">
-      </div>
-      <div class="col-md-6 venue-center">
-        <img class="venue-image" src="@routes.Assets.versioned("image/venue/p4.jpg")">
-        <img class="venue-image venue-center-middle" src="@routes.Assets.versioned("image/venue/p8.jpg")">
-        <img class="venue-image" src="@routes.Assets.versioned("image/venue/p5.jpg")">
-      </div>
-      <div class="col-md-3 venue-side">
-        <img class="venue-image venue-side-first" src="@routes.Assets.versioned("image/venue/p9.jpg")">
-        <img class="venue-image" src="@routes.Assets.versioned("image/venue/p7.jpg")">
-      </div>
-    </div>
+    @conference.venue.map { venue =>
+      <div class="beautiful-line-top"></div>
+      <div class="beautiful-line-bottom" id="location"></div>
 
-    <div class="row" style="padding-bottom: 30px">
-      <div class="col-md-12">
-        <img class="venue-image-bottom" src="@routes.Assets.versioned("image/venue/p2.jpg")">
+      <div class="row" style="padding-bottom: 30px">
+        <div class="col-md-6 location-address">
+          <h2 style="padding-bottom: 0; margin-bottom: 0">Location</h2>
+          <p class="location-address-name">@venue.name</p>
+          <p>@venue.address.streetName @venue.address.houseNumber, @venue.address.zipCode @venue.address.city</p>
+        </div>
+        <div class="col-md-6" style="text-align: right">
+          <a class="btn btn-lg btn-success register-button" href="/@conference.normalUrl("location")" role="button">Get directions</a>
+        </div>
       </div>
-    </div>
+
+      <div class="row" style="padding-bottom: 30px">
+        <div class="col-md-3 venue-side">
+          <img class="venue-image venue-side-first" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p6.jpg"))">
+          <img class="venue-image" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p3.jpg"))">
+        </div>
+        <div class="col-md-6 venue-center">
+          <img class="venue-image" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p4.jpg"))">
+          <img class="venue-image venue-center-middle" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p8.jpg"))">
+          <img class="venue-image" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p5.jpg"))">
+        </div>
+        <div class="col-md-3 venue-side">
+          <img class="venue-image venue-side-first" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p9.jpg"))">
+          <img class="venue-image" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p7.jpg"))">
+        </div>
+      </div>
+
+      <div class="row" style="padding-bottom: 30px">
+        <div class="col-md-12">
+          <img class="venue-image-bottom" src="@routes.Assets.versioned(conference.assetUrl("image/venue/p2.jpg"))">
+        </div>
+      </div>
+    }
+
 
     <div class="beautiful-line-top"></div>
     <div class="beautiful-line-bottom" id="sponsors"></div>
@@ -265,86 +267,75 @@
     </div>
 
     <div class="row index-s-row" style="padding-top: 0px">
-      @sponsors.filter(_.sponsorType == SponsorType.Gold).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Gold).headOption.map { s =>
         <div class="col-md-4 s-home-cont">
           <a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
-      @sponsors.filter(_.sponsorType == SponsorType.Gold).drop(1).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Gold).drop(1).headOption.map { s =>
         <div class="col-md-4 s-home-cont" style="padding-top: 15px">
           <a href="@s.url" target="_blank"><img class="s-home-logo" style="width: 100%" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
-      @sponsors.filter(_.sponsorType == SponsorType.Gold).drop(2).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Gold).drop(2).headOption.map { s =>
         <div class="col-md-4 s-home-cont" style="padding-top: 20px">
           <a href="@s.url" target="_blank"><img class="s-home-logo" style="width: 100%" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
     </div>
     <div class="row index-s-row" style="padding-top: 40px">
-      @sponsors.filter(_.sponsorType == SponsorType.Opportunity).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Opportunity).headOption.map { s =>
         <div class="col-md-4 s-home-cont"  style="padding-top: 0px">
           <a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
-      @sponsors.filter(_.sponsorType == SponsorType.Bronze).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Bronze).headOption.map { s =>
         <div class="col-md-4 s-home-cont">
           <a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
-      @sponsors.filter(_.sponsorType == SponsorType.Silver).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Silver).headOption.map { s =>
         <div class="col-md-4 s-home-cont" style="padding-top: 0px">
           <a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
     </div>
     <div class="row index-s-row" style="padding-top: 40px">
-      @sponsors.filter(_.sponsorType == SponsorType.Silver).drop(1).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Silver).drop(1).headOption.map { s =>
         <div class="col-md-4 s-home-cont" style="padding-top: 20px">
           <a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
-      @sponsors.filter(_.sponsorType == SponsorType.Partner).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Partner).headOption.map { s =>
         <div class="col-md-4 s-home-cont">
           <a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
-      @sponsors.filter(_.sponsorType == SponsorType.Partner).drop(1).headOption.map { s =>
+      @conference.sponsors.filter(_.sponsorType == SponsorType.Partner).drop(1).headOption.map { s =>
         <div class="col-md-4 s-home-cont" style="padding-top: 0px">
           <a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>
         </div>
       }
     </div>
 
-    @* Use different strategy as soon as we have nore sponsors *@
-    @* @sponsors.filter(_.sponsorType != SponsorType.Organiser).grouped(3).map { sr =>*@
-      @*<div class="row index-sponsor-row" style="padding-top: 0px">*@
-        @* @sr.map { s =>*@
-          @*<div class="col-md-4 s-home-cont">*@
-            @*<a href="@s.url" target="_blank"><img class="s-home-logo" src="@s.logoUrl" alt="@s.name" title="@s.name"></a>*@
-          @*</div>*@
-        @*}*@
-      @*</div>*@
-    @*}*@
-
     <div class="row">
       <div class="col-md-12" style="padding-top: 30px">
-      @organisedBy()
+      @organisedBy(conference)
       </div>
     </div>
 
     <div class="row" style="padding-top: 65px; padding-bottom: 50px">
       <div class="col-md-12" style="text-align: center">
-        <a class="btn btn-lg btn-success register-button" href="/sponsors" role="button">View Sponsors</a>
+        <a class="btn btn-lg btn-success register-button" href="/@conference.normalUrl("sponsors")" role="button">View Sponsors</a>
       </div>
     </div>
 
     <div class="row content-row">
       <div class="col-md-12" style="text-align: center; font-size: 0.8em">
-        <p>Interested in sponsoring? Drop us an email at <a href="mailto:@config.sponsorEmail">@config.sponsorEmail</a>.</p>
+        <p>Interested in sponsoring? Drop us an email at <a href="mailto:@conference.sponsorEmail">@conference.sponsorEmail</a>.</p>
       </div>
     </div>
   </div>
 
-  @footerNav(config, "primary-footer")
+  @footerNav(config, conference, "primary-footer")
 }

@@ -1,8 +1,8 @@
-@import views.Config
+@import views._
 
-@(config: Config, title: String)(content: Html)
+@(config: Config, conference: Conference, title: String)(content: Html)
 
-@admin.main(config, title) {
+@main(config, conference, title) {
   <div class="container">
     <div class="header clearfix">
       <nav>

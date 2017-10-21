@@ -1,8 +1,8 @@
 @import views._
 
-@(config: Config, sponsors: Seq[Sponsor])
+@(config: Config, conference: Conference)
 
-@secondary(config, "Sponsors", metaInfo = Some(MetaInfo("GraphQL-Europe Conference Sponsors"))) {
+@secondary(config, conference, "Sponsors", metaInfo = Some(MetaInfo("GraphQL-Europe Conference Sponsors"))) {
 
   <div class="container">
     <div class="row">
@@ -12,12 +12,12 @@
 
         <p style="font-weight: bold">Interested in sponsoring GraphQL-Europe?</p>
 
-        <p>Contact our sponsor team at <a href="mailto:@config.sponsorEmail">@config.sponsorEmail</a> for more information regarding sponsor packages.</p>
+        <p>Contact our sponsor team at <a href="mailto:@conference.sponsorEmail">@conference.sponsorEmail</a> for more information regarding sponsor packages.</p>
       </div>
     </div>
 
     @SponsorSection.sections.map { section =>
-      @defining(sponsors.filter(_.sponsorType == section.sponsorType)) { sectionSponsors =>
+      @defining(conference.sponsors.filter(_.sponsorType == section.sponsorType)) { sectionSponsors =>
         @if(sectionSponsors.nonEmpty) {
           <div class="row">
             <div class="col-md-12">

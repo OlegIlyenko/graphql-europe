@@ -1,27 +1,28 @@
 @import views._
+@import views.ed2017._
 
-@(config: Config, metaInfo: Option[MetaInfo])
+@(config: Config, conference: Conference, metaInfo: Option[MetaInfo])
 
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="keywords" content="GraphQL,conference,Europe,Berlin,2017" />
+<meta name="keywords" content="GraphQL,conference,Europe,Berlin,@conference.year" />
 
-<meta name="description" content="@config.name - @config.location - @config.description">
+<meta name="description" content="@conference.name - @conference.location - @conference.description">
 
 <meta property="og:type" content="article">
 <meta property="og:url" content="@config.canonicalUrl@config.path">
-<meta property="og:title" content="@config.name - @config.location - @config.shortDescription">
-<meta property="og:description" content="@metaInfo.fold(config.name + " - " + config.location + " - " + config.description)(_.description)">
-<meta property="og:image:url" content="@metaInfo.flatMap(_.bannerUrl).getOrElse(config.canonicalUrl + routes.Assets.versioned("image/share-graphql-europe.png"))">
+<meta property="og:title" content="@conference.name - @conference.location - @conference.shortDescription">
+<meta property="og:description" content="@metaInfo.fold(conference.name + " - " + conference.location + " - " + conference.description)(_.description)">
+<meta property="og:image:url" content="@metaInfo.flatMap(_.bannerUrl).getOrElse(config.canonicalUrl + routes.Assets.versioned(conference.assetUrl("image/share-graphql-europe.png")))">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@@graphqleu">
 <meta name="twitter:creator" content="@@@metaInfo.flatMap(_.twitter).getOrElse("graphqleu")">
-<meta name="twitter:title" content="@config.name - @config.shortDescription">
-<meta name="twitter:description" content="@metaInfo.fold(config.name + " - " + config.location + " - " + config.description)(_.description)">
-<meta name="twitter:image" content="@metaInfo.flatMap(_.bannerUrl).getOrElse(config.canonicalUrl + routes.Assets.versioned("image/share-graphql-europe.png"))">
+<meta name="twitter:title" content="@conference.name - @conference.shortDescription">
+<meta name="twitter:description" content="@metaInfo.fold(conference.name + " - " + conference.location + " - " + conference.description)(_.description)">
+<meta name="twitter:image" content="@metaInfo.flatMap(_.bannerUrl).getOrElse(config.canonicalUrl + routes.Assets.versioned(conference.assetUrl("image/share-graphql-europe.png")))">
 
 <link rel="canonical" href="@config.canonicalUrl" />
 

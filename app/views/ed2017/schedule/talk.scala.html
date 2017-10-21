@@ -1,9 +1,9 @@
 @import views._
-@import repo.ContentRepo
+@import views.ed2017._
 
-@(config: Config, talk: Talk, repo: ContentRepo)
+@(config: Config, talk: Talk, conference: Conference)
 
-@secondary(config, talk.title, metaInfo = Some(talk.metaInfo)) {
+@views.html.ed2017.secondary(config, conference, talk.title, metaInfo = Some(talk.metaInfo)) {
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -40,7 +40,7 @@
       </div>
 
       @talk.speakers.sortBy(_.slug).map { speaker =>
-        @speakerSection(speaker, repo, noTaks = true)
+        @speakerSection(speaker, conference, noTaks = true)
       }
     }
   </div>

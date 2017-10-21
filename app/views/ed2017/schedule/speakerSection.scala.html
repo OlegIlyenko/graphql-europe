@@ -1,11 +1,10 @@
 @import views._
-@import repo.ContentRepo
 
-@(speaker: Speaker, repo: ContentRepo, showName: Boolean = true, noTaks: Boolean = false)
+@(speaker: Speaker, conference: Conference, showName: Boolean = true, noTaks: Boolean = false)
 
 <div class="row" style="padding-bottom: 100px;">
   <div class="col-md-4 speakers-speaker-photo-cont">
-    <a href="/speakers/@speaker.slug"><img class="speakers-speaker-photo" src="@speaker.photoUrl.getOrElse(routes.Assets.versioned(s"image/speakers/you.png"))" alt="@speaker.name"></a>
+    <a href="/@conference.normalUrl("speakers/" + speaker.slug)"><img class="speakers-speaker-photo" src="@speaker.photoUrl.getOrElse(routes.Assets.versioned(conference.assetUrl(s"image/speakers/you.png")))" alt="@speaker.name"></a>
 
     @speaker.github.map { gh =>
       <a target="_blank" class="speaker-icon" style="font-size: 1.3em" href="https://github.com/@gh"><i class="fa fa-github" aria-hidden="true"></i></a>
@@ -19,7 +18,7 @@
   <div class="col-md-8" style='padding-left: 30px'>
     @if(showName)  {
       <h3 style="padding-bottom: 10px">
-        <a href="/speakers/@speaker.slug" style="padding-right: 10px"><strong>@speaker.name</strong></a>
+        <a href="/@conference.normalUrl("speakers/" + speaker.slug)" style="padding-right: 10px"><strong>@speaker.name</strong></a>
       </h3>
     }
 
@@ -34,14 +33,14 @@
       @MarkdownUtil.render(descr)
     }
 
-    @if(!noTaks && repo.talksBySpeaker(speaker).nonEmpty) {
+    @if(!noTaks && conference.talksBySpeaker(speaker).nonEmpty) {
       <p>
         <strong>Talks</strong>
       </p>
 
-      @repo.talksBySpeaker(speaker).map { talk =>
+      @conference.talksBySpeaker(speaker).map { talk =>
         <p>
-          <a href="/schedule/@talk.slug">@talk.title</a>
+          <a href="/@conference.normalUrl("schedule/" + talk.slug)">@talk.title</a>
         </p>
       }
     }

@@ -1,12 +1,12 @@
 @import views._
 
-@(config: Config, venue: Venue)
+@(config: Config, conference: Conference, venue: Venue)
 
 @tegel = @{venue.directions.filter(_.`type` == DirectionType.Airport)(0)}
 @schoenefeld = @{venue.directions.filter(_.`type` == DirectionType.Airport)(1)}
 @mainStation = @{venue.directions.filter(_.`type` == DirectionType.TrainStation)(0)}
 
-@secondary(config, s"Location - ${venue.name}", showMap = Some(venue)) {
+@secondary(config, conference, s"Location - ${venue.name}", showMap = Some(venue)) {
   <div class="container">
     <div class="row" style="padding-top: 50px">
       <div class="col-md-6">
@@ -45,7 +45,7 @@
     <div class="row" style="padding-top: 50px">
       <div class="col-md-6">
         <div class="transport-icon">
-          <img src="@routes.Assets.versioned("image/airport.svg")">
+          <img src="@routes.Assets.versioned(conference.assetUrl("image/airport.svg"))">
         </div>
         <div class="transport-descr">
           <p class="transport-title">From @tegel.from</p>
@@ -55,7 +55,7 @@
 
       <div class="col-md-6">
         <div class="transport-icon">
-          <img src="@routes.Assets.versioned("image/train.svg")">
+          <img src="@routes.Assets.versioned(conference.assetUrl("image/train.svg"))">
         </div>
         <div class="transport-descr">
           <p class="transport-title">From @mainStation.from</p>
@@ -67,7 +67,7 @@
     <div class="row" style="padding-top: 50px">
       <div class="col-md-6">
         <div class="transport-icon">
-          <img src="@routes.Assets.versioned("image/airport.svg")">
+          <img src="@routes.Assets.versioned(conference.assetUrl("image/airport.svg"))">
         </div>
         <div class="transport-descr">
           <p class="transport-title">From @schoenefeld.from</p>
@@ -77,7 +77,7 @@
 
       <div class="col-md-6">
         <div class="transport-icon">
-          <img src="@routes.Assets.versioned("image/car.svg")">
+          <img src="@routes.Assets.versioned(conference.assetUrl("image/car.svg"))">
         </div>
         <div class="transport-descr">
           <p class="transport-title">With the car</p>

@@ -1,12 +1,12 @@
 @import views._
 
-@(config: Config, team: Seq[TeamMember])
+@(config: Config, conference: Conference)
 
-@secondary(config, "Team", metaInfo = Some(MetaInfo("GraphQL-Europe Conference Team"))) {
+@secondary(config, conference, "Team", metaInfo = Some(MetaInfo("GraphQL-Europe Conference Team"))) {
   <div class="container">
     <div class="row">
       <div class="col-md-12" style="padding-top: 100px; padding-bottom: 50px;">
-        @organisedBy()
+        @organisedBy(conference)
       </div>
     </div>
 
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    @team.filter(_.teamSection == TeamSection.Core).grouped(3).map { mr =>
+    @conference.team.filter(_.teamSection == TeamSection.Core).grouped(3).map { mr =>
       <div class="row" style="padding-top: 0px">
         @mr.map { m =>
           @teamMember(m)
@@ -24,7 +24,7 @@
       </div>
     }
 
-    @if(team.exists(_.teamSection == TeamSection.SpecialThanks)) {
+    @if(conference.team.exists(_.teamSection == TeamSection.SpecialThanks)) {
       <div class="row">
         <div class="col-md-12">
           <h1>With special thanks to!</h1>
@@ -32,7 +32,7 @@
       </div>
     }
 
-    @team.filter(_.teamSection == TeamSection.SpecialThanks).grouped(3).map { mr =>
+    @conference.team.filter(_.teamSection == TeamSection.SpecialThanks).grouped(3).map { mr =>
       <div class="row" style="padding-top: 0px">
         @mr.map { m =>
           @teamMember(m)
@@ -49,7 +49,7 @@
           For further details on sponsorship and the conference drop us a line
         </p>
         <p>
-          <a style="padding-top: 15px" href="mailto:@config.sponsorEmail">@config.sponsorEmail</a>
+          <a style="padding-top: 15px" href="mailto:@conference.sponsorEmail">@conference.sponsorEmail</a>
         </p>
       </div>
     </div>

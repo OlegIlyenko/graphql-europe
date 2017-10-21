@@ -1,14 +1,12 @@
-@import views.Config
+@import views._
 
-@(config: Config, title: String, bodyClass: Option[String] = None)(content: Html)
+@(config: Config, conference: Conference, title: String, bodyClass: Option[String] = None)(content: Html)
 
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
-    @meta(config, None)
-
-    <title>@config.name - @title</title>
+    <title>@conference.name - @title</title>
 
     @font()
 

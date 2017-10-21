@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 import akka.actor.ActorSystem
 import graphql.schema
+import graphql.schema.Ctx
 import play.api.Configuration
 import play.api.libs.json.{JsObject, JsString, Json}
 import play.api.mvc.{Action, Controller}
@@ -74,7 +75,7 @@ class GraphQL @Inject() (system: ActorSystem, config: Configuration, repo: Conte
   val conf = config.underlying.as[Config]("graphqlEurope")
 
   def graphiql = Action {
-    Ok(views.html.graphiql(conf, defaultQuery))
+    Ok(views.html.graphiql(conf, repo.currentConference, defaultQuery))
   }
 
   def graphql = Action.async(parse.json) { request ⇒
@@ -96,7 +97,7 @@ class GraphQL @Inject() (system: ActorSystem, config: Configuration, repo: Conte
   private def executeQuery(query: String, variables: Option[JsObject], operation: Option[String]) =
     QueryParser.parse(query) match {
       case Success(queryAst) ⇒
-        Executor.execute(schema.ConferenceSchema, queryAst, repo,
+        Executor.execute(schema.ConferenceSchema, queryAst, Ctx(repo),
           operationName = operation,
           variables = variables getOrElse Json.obj(),
           maxQueryDepth = Some(10))

@@ -1,8 +1,8 @@
-@import views.Config
+@import views._
 
-@(config: Config, title: String, message: String)
+@(config: Config, conference: Conference, title: String, message: String)
 
-@admin.secure(config, "Secure Area") {
+@secure(config, conference, "Secure Area") {
   <div class="container" style="padding-top: 50px">
     <div class="row">
       <div class="col-lg-12">

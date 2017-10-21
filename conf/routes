@@ -1,23 +1,24 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
+# TODO: keep current
+GET         /                      controllers.ed2017.Application.index
 
-# Home page
-GET         /                      controllers.Application.index
-GET         /code-of-conduct       controllers.Application.codeOfConduct
-GET         /imprint               controllers.Application.imprint
-GET         /team                  controllers.Application.team
-GET         /sponsors              controllers.Application.sponsors
-GET         /location              controllers.Application.location
-GET         /qa                    controllers.Application.qa
+# 2018 Edition
 
-GET         /2017                  controllers.Application.year2017
-GET         /2017/videos           controllers.Application.year2017videos
+# 2017 Edition
 
-GET         /schedule              controllers.Schedule.index
-GET         /schedule/:slug        controllers.Schedule.talk(slug)
-GET         /speakers              controllers.Schedule.speakers
-GET         /speakers/:slug        controllers.Schedule.speaker(slug)
+GET         /2017                  controllers.ed2017.Application.index
+GET         /2017/code-of-conduct  controllers.ed2017.Application.codeOfConduct
+GET         /2017/imprint          controllers.ed2017.Application.imprint
+GET         /2017/team             controllers.ed2017.Application.team
+GET         /2017/sponsors         controllers.ed2017.Application.sponsors
+GET         /2017/location         controllers.ed2017.Application.location
+GET         /2017/videos           controllers.ed2017.Application.videos
+
+GET         /2017/schedule         controllers.ed2017.Schedule.index
+GET         /2017/schedule/:slug   controllers.ed2017.Schedule.talk(slug)
+GET         /2017/speakers         controllers.ed2017.Schedule.speakers
+GET         /2017/speakers/:slug   controllers.ed2017.Schedule.speaker(slug)
+
+# Generic routes
 
 GET         /graphql               controllers.GraphQL.graphiql
 POST        /graphql               controllers.GraphQL.graphql

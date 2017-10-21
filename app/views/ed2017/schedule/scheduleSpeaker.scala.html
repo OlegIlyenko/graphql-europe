@@ -1,11 +1,11 @@
 @import views._
 @import repo.ContentRepo
 
-@(speaker: Speaker)
+@(speaker: Speaker, conference: Conference)
 
 <div class="schedule-speaker-row">
   <div class="schedule-speaker-photo-cont">
-    <a href="/speakers/@speaker.slug"><img class="speakers-speaker-photo" src="@speaker.photoUrl.getOrElse(routes.Assets.versioned(s"image/speakers/you.png"))" alt="@speaker.name"></a>
+    <a href="/@conference.normalUrl("speakers/" + speaker.slug)"><img class="speakers-speaker-photo" src="@speaker.photoUrl.getOrElse(routes.Assets.versioned(conference.assetUrl(s"image/speakers/you.png")))" alt="@speaker.name"></a>
 
     @speaker.github.map { gh =>
       <a target="_blank" class="speaker-icon" href="https://github.com/@gh"><i class="fa fa-github" aria-hidden="true"></i></a>
@@ -18,7 +18,7 @@
 
   <div class="schedule-speaker-descr-cont" style='padding-left: 30px'>
     <h3 style="padding-bottom: 10px">
-      <a href="/speakers/@speaker.slug" style="padding-right: 10px"><strong>@speaker.name</strong></a>
+      <a href="/@conference.normalUrl("speakers/" + speaker.slug)" style="padding-right: 10px"><strong>@speaker.name</strong></a>
     </h3>
 
     @speaker.company.map { c =>

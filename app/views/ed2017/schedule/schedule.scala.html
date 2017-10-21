@@ -1,9 +1,9 @@
 @import views._
-@import repo.ContentRepo
+@import views.ed2017._
 
-@(config: Config, repo: ContentRepo)
+@(config: Config, conference: Conference)
 
-@secondary(config, "Schedule", metaInfo = Some(MetaInfo("GraphQL-Europe Conference Schedule"))) {
+@views.html.ed2017.secondary(config, conference, "Schedule", metaInfo = Some(MetaInfo("GraphQL-Europe Conference Schedule"))) {
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -13,8 +13,8 @@
   </div>
 
   <div class="container">
-    @repo.schedule.zipWithIndex.map { case (talk, idx) =>
-      <div class="row schedule-row @{if (idx == 0) "schedule-first" else if (idx == repo.schedule.size - 1) "schedule-last" else ""}">
+    @conference.schedule.zipWithIndex.map { case (talk, idx) =>
+      <div class="row schedule-row @{if (idx == 0) "schedule-first" else if (idx == conference.schedule.size - 1) "schedule-last" else ""}">
         <div class="col-md-12 foo">
           <div class="schedule-time-col">
             <p>
@@ -29,15 +29,15 @@
           </div>
           <div class="schedule-line-col">
             @talk match {
-              case t: Talk => {<img src="@routes.Assets.versioned(s"image/schedule-dot.svg")" class="schedule-dot">}
-              case x => {<img src="@routes.Assets.versioned(s"image/schedule-dot1.svg")" class="schedule-dot">}
+              case t: Talk => {<img src="@routes.Assets.versioned(conference.assetUrl(s"image/schedule-dot.svg"))" class="schedule-dot">}
+              case x => {<img src="@routes.Assets.versioned(conference.assetUrl(s"image/schedule-dot1.svg"))" class="schedule-dot">}
             }
 
             <div class="schedule-line"></div>
           </div>
           <div class="schedule-content-col">
             @talk match {
-              case t: Talk => {@scheduleTalk(t)}
+              case t: Talk => {@scheduleTalk(t, conference)}
               case e: Lunch => {@scheduleSpecial("Lunch", e)}
               case e: Break => {@scheduleSpecial("Break", e)}
               case e: Registration => {@scheduleSpecial("Registration", e)}

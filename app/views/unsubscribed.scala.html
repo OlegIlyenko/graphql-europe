@@ -1,8 +1,9 @@
-@import views.Config
+@import views._
 
-@(config: Config)
+@(config: Config, conference: Conference)
 
-@secondary(config, "Unsubscribed") {
+@* TODO: keep current *@
+@views.html.ed2017.secondary(config, conference, "Unsubscribed") {
   <div class="container">
     <div class="row">
       <div class="col-md-12">

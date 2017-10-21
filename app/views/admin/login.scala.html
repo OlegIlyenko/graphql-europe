@@ -1,8 +1,8 @@
-@import views.Config
+@import views._
 
-@(config: Config, fragment: String, errors: List[String])
+@(config: Config, conference: Conference, fragment: String, errors: List[String])
 
-@admin.main(config, "Login") {
+@main(config, conference, "Login") {
   <div class="container">
     <div class="row" style="padding-top: 50px">
       <div class="col-lg-12">
