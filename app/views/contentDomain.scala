@@ -97,9 +97,17 @@ case class Talk(
   duration: Duration,
   speakers: List[Speaker],
   slidesUrl: Option[String] = None,
-  shortDescription: Option[String] = None
+  shortDescription: Option[String] = None,
+  videoUrl: Option[String] = None
 ) extends ScheduleEntry(ScheduleEntryType.Talk) with WithSlug {
   lazy val slug = title.replaceAll("\\s+", "-").replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase
+
+  lazy val youtubeId = videoUrl.flatMap { url ⇒
+    val mat = Talk.YoutubePattern.matcher(url)
+
+    if (mat.matches()) Option(mat.group(1))
+    else None
+  }
 
   lazy val metaInfo = {
     val speaker = speakers.headOption
@@ -114,6 +122,8 @@ case class Talk(
 }
 
 object Talk {
+  val YoutubePattern = """.*www\.youtube\.com\/watch\?v=([^&]+)&.*""".r.pattern
+
   implicit lazy val graphqlType: ObjectType[Ctx, Talk] =
     deriveObjectType[Ctx, Talk](
       ExcludeFields("shortDescription"),
@@ -227,7 +237,8 @@ case class Conference(
   speakersUrl: String,
   sponsorsUrl: String,
   teamUrl: String,
-  locationUrl: String
+  locationUrl: String,
+  videosUrl: String
 ) {
   lazy val talks = schedule.collect {case t: Talk ⇒ t}
 

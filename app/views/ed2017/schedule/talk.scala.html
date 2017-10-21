@@ -32,6 +32,16 @@
       </div>
     </div>
 
+    @talk.youtubeId.map { id =>
+      <div class="row" style="padding-top: 20px;padding-bottom: 20px;">
+        <div class="col-md-12" style="text-align: center">
+          <iframe class="talk-video" width="560" height="314" src="https://www.youtube.com/embed/@id?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    }
+
+
+
     @if(talk.speakers.nonEmpty) {
       <div class="row">
         <div class="col-md-12">

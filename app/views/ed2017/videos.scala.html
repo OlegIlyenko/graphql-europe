@@ -3,7 +3,7 @@
 @(config: Config, conference: Conference)
 
 @secondary(config, conference, "Videos") {
-  <div class="container">
+  <div class="container" style="padding-bottom: 20px">
     <div class="row">
       <div class="col-md-12">
         <h1>Videos</h1>
@@ -13,9 +13,39 @@
     <div class="row">
       <div class="col-md-12">
         <p>
-          The videos will be published <a target="_blank" href="https://www.youtube.com/channel/UCptAHlN1gdwD89tFM3ENb6w">on the YouTube</a> and available here soon.
+          All videos are published on the YouTube. The playlist is available <a target="_blank" href="https://www.youtube.com/watch?v=coU6OmISOBM&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt">here</a>.
         </p>
       </div>
     </div>
+
+    @conference.talks.filter(_.youtubeId.isDefined).grouped(2).map { group =>
+      <div class="row" style="padding-top: 55px">
+        @group.zipWithIndex.map { case (talk, talkIdx) =>
+          <div class="col-md-5">
+            <iframe class="talk-video" width="475" height="266" src="https://www.youtube.com/embed/@talk.youtubeId?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+            <p>
+              <div class="video-talk-title"><a href="@talk.videoUrl" target="_blank">@talk.title</a></div>
+            </p>
+
+            <p>
+              by
+
+              @talk.speakers.zipWithIndex.map { case (speaker, idx) =>
+                <span class="video-speaker-name"><a href="/@conference.normalUrl("speakers/" + speaker.slug)">@speaker.name</a></span>
+                @if(idx != talk.speakers.size - 1) {
+                  ,&nbsp
+                }
+              }
+            </p>
+          </div>
+
+          @if(talkIdx != group.size - 1) {
+            <div class="col-md-1"></div>
+          }
+
+        }
+      </div>
+    }
   </div>
 }

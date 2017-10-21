@@ -344,6 +344,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(10)),
     Talk(
       title = "GraphQL: Evolution or Revolution?",
+      videoUrl = Some("https://www.youtube.com/watch?v=coU6OmISOBM&index=1&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description = cleanupText(
         """In this talk I will present a thorough comparison between SOAP, WSDL, oData, REST(ful), Falcor and GraphQL. I will show a small code sample for each of the technologies, present how/where they are being used, and compare them to GraphQL on a number of metrics:
           |
@@ -384,6 +385,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(30)),
     Talk(
       title = "Adding GraphQL to your existing architecture",
+      videoUrl = Some("https://www.youtube.com/watch?v=bIY2SUSEBY0&index=2&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description =
         "If you’re a product developer in today’s world, you have to wear a lot of hats. " +
         "You signed up to create great experiences, but you're also spending a ton of time " +
@@ -402,6 +404,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
     Break(LocalTime.of(10, 40), LocalTime.of(11, 0), Duration.ofMinutes(20)),
     Talk(
       title = "Realtime GraphQL from the Trenches",
+      videoUrl = Some("https://www.youtube.com/watch?v=ShrCTUJJDT0&index=3&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description = cleanupText(
         """We can learn a lot from organizations such as Facebook and Apollo in terms of how to work with Realtime GraphQL but how does it work for most of us? What can we learn from a product company iterating fast on new features at scale? And perhaps most importantly, did GraphQL work for Mainframe opposed to going with some other technology?
           |
@@ -414,6 +417,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(30)),
     Talk(
       title = "Building global GraphQL API distribution",
+      videoUrl = Some("https://www.youtube.com/watch?v=MeI5Af58dWg&index=4&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description = cleanupText(
         """In iflix we are delivering video on demand to emerging markets on our mission to redefine television for 1 billion people. But it has a lot of technical challenges, one of them being to create a fast, reliable and flexible API which will be accessible from Africa over Middle East to South East Asia.
           |
@@ -437,6 +441,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(5)),
     Talk(
       title = "Five Years of Client GraphQL Infrastructure",
+      videoUrl = Some("https://www.youtube.com/watch?v=5lcvRd80jYk&index=5&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description = cleanupText(
         """When Facebook first started using GraphQL in 2012, “Client GraphQL Infrastructure” meant smashing strings together for the query and a simple JSON parser for the response. Since then, Facebook has developed app-wide SDKs, simplifying how client developers build the entire client based on core principles of GraphQL. From client caches to pagination abstractions, from cross-platform toolchains to generated models, Facebook’s client SDKs have evolved over the last five years to support hundreds of developers and thousands of queries across dozens of apps, and the evolution of these clients has informed the evolution of GraphQL itself.
           |
@@ -449,6 +454,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(30)),
     Talk(
       title = "Fighting legacy codebases with GraphQL and Rails",
+      videoUrl = Some("https://www.youtube.com/watch?v=TIzEZJuDpIQ&index=6&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description = cleanupText(
         """GraphQL is one of the hottest technologies of the past year or two. Still, very little is talked about GraphQL outside of the realm of front-end applications.
           |
@@ -465,6 +471,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
     Break(LocalTime.of(15, 0), LocalTime.of(15, 20), Duration.ofMinutes(20)),
     Talk(
       title = "Launching GitHub's Public GraphQL API",
+      videoUrl = Some("https://www.youtube.com/watch?v=pxjIwOtVlwk&index=7&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description = cleanupText(
         """It's been a little over a year since GraphQL was first introduced into GitHub's codebase, but a lot has changed since that first commit. Today, all of GitHub's new features use GraphQL internally to access data and a public GraphQL API is available for any user to query across the platform.
           |
@@ -478,6 +485,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(30)),
     Talk(
       title = "Schema first development",
+      videoUrl = Some("https://www.youtube.com/watch?v=SdWI7XaAeeY&index=8&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description =
         "GraphQL is not just a great way to query data from your server but also " +
         "an incredibly expressive format to describe the data model of your domain " +
@@ -492,6 +500,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(8)),
     Talk(
       title = "Building a GraphQL client in Javascript",
+      videoUrl = Some("https://www.youtube.com/watch?v=AUpUfsNoW4o&index=9&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description =
         "A really quick overview of what drove me, and a small team at shopify, " +
         "to build our own Relay compliant GraphQL client, and some of the " +
@@ -504,6 +513,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(8)),
     Talk(
       title = "Query Graphs with \"Graph\"QL",
+      videoUrl = Some("https://www.youtube.com/watch?v=dBkF4Z-PO24&index=10&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt"),
       description =
         "Despite the \"Graph\" in the name, GraphQL is mostly used to " +
         "query relational databases or object models. But it is really well " +
@@ -518,6 +528,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(8)),
     Talk(
       title = "Using GraphQL in a Mesh Network to Enable Real-Time Collaboration",
+      videoUrl = Some("https://www.youtube.com/watch?v=CN5fDLhXMLs&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt&index=11"),
       description =
         "At Hudl we're helping coaches and athletes around the world perform to " +
         "their best by incorporating live video analysis into their in-game and " +
@@ -536,6 +547,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofMinutes(8)),
     Talk(
       title = "MockQ buddy! Easy API Driven Design and Accurate Documentation with GraphQL",
+      videoUrl = Some("https://www.youtube.com/watch?v=n8HR9ShrL2c&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt&index=12"),
       description =
         cleanupText(
           """In this talk I will demonstrate how to rapidly get a GraphQL service running with realistic mock data that consumers can develop against and discuss. In parallel we use the same schema to provide the real data and accurate, up-to-date documentation.
@@ -559,6 +571,7 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
     Break(LocalTime.of(16, 30), LocalTime.of(16, 50), Duration.ofMinutes(20)),
     Talk(
       title = "Panel Discussion",
+      videoUrl = Some("https://www.youtube.com/watch?v=-BieqAC_J1o&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt&index=14"),
       description = "Adopting GraphQL in existing products and organizations",
       cardUrl = assetUrl("/share-graphql-europe.png"),
       speakers = List(
@@ -573,7 +586,8 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
       duration = Duration.ofHours(1)),
     Talk(
       title = "Closing Keynote",
-      description = "More information coming soon.", // TODO: description
+      videoUrl = Some("https://www.youtube.com/watch?v=mePT9MNTM98&list=PLn2e1F9Rfr6n_WFm9fPE-_wYPrYvSTySt&index=13"),
+      description = "More information coming soon.",
       speakers = List(speaker.LeeByron),
       cardUrl = assetUrl("/talks/lee-byron.png"),
       format = TalkFormat.Standard,
@@ -759,5 +773,6 @@ class Conference2017 @Inject() (config: Configuration) extends ConferenceData {
     speakersUrl = url("/speakers"),
     sponsorsUrl = url("/sponsors"),
     teamUrl = url("/team"),
-    locationUrl = url("/location"))
+    locationUrl = url("/location"),
+    videosUrl = url("/videos"))
 }
