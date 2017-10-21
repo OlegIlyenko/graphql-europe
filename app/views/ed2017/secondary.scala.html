@@ -3,6 +3,11 @@
 @(config: Config, conference: Conference, title: String, showMap: Option[Venue] = None, metaInfo: Option[MetaInfo] = None)(content: Html)
 
 @main(config, conference, title, Some("secondary-body"), showMap = showMap, metaInfo = metaInfo) {
+  <div class="old-warning-header">
+    <div class="container">
+      <div class="old-warning">You are viewing an old conference website from year @conference.year. (<a style="warning-link" href="/">main conference website</a>)</div>
+    </div>
+  </div>
   <div class="secondary-header">
     <div class="container">
       <div class="header clearfix">

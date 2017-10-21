@@ -5,6 +5,12 @@
 @prefix = @{if (dark) "-dark" else ""}
 
 @main(config, conference, conference.shortDescription) {
+  <div class="old-warning-header">
+    <div class="container">
+      <div class="old-warning">You are viewing an old conference website from year @conference.year. The 2018 edition is coming soon! <a style="warning-link" href="#attend">Subscribe today</a> to get updates.</div>
+    </div>
+  </div>
+  
   @if(dark) {
     <div class="form-bg"></div>
   }

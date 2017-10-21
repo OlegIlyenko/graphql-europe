@@ -1537,3 +1537,13 @@ footer .navbar-light .navbar-nav .nav-link:active {
   font-size: 1.2em;
 }
 
+.old-warning-header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #fab65f;
+}
+
+.old-warning {
+  text-align: center;
+}
+
